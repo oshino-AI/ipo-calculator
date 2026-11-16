@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-14T03:16+09:00",
+ "updatedAt": "2026-11-16T15:32+09:00",
  "warnings": [
   "씨앤엠: 상세 읽기 실패 (ValueError)",
   "제이앤티지: 상세 읽기 실패 (ValueError)"
@@ -662,7 +662,15 @@
    "subCompetition": "1342.66:1",
    "proportional": "2685:1",
    "floatShares": 5041041,
-   "floatPct": 34.86
+   "floatPct": 34.86,
+   "open38": 16170,
+   "open": 16170,
+   "high": 16500,
+   "low": 9200,
+   "close": 9200,
+   "priceCheck": false,
+   "priceSource": "naver",
+   "priceFinal": false
   },
   {
    "no": 2336,
