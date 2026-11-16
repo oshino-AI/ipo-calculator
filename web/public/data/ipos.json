@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-16T15:32+09:00",
+ "updatedAt": "2026-11-16T20:10+09:00",
  "warnings": [
   "씨앤엠: 상세 읽기 실패 (ValueError)",
   "제이앤티지: 상세 읽기 실패 (ValueError)"
@@ -666,11 +666,12 @@
    "open38": 16170,
    "open": 16170,
    "high": 16500,
-   "low": 9200,
-   "close": 9200,
+   "low": 8820,
+   "close": 8850,
    "priceCheck": false,
    "priceSource": "naver",
-   "priceFinal": false
+   "priceFinal": true,
+   "close38": 9200
   },
   {
    "no": 2336,
