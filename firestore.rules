@@ -6,7 +6,7 @@ service cloud.firestore {
     // 목록에 없는 Google 계정은 로그인은 되어도 저장소를 읽거나 쓸 수 없다.
     // 수치 상한은 web/src/lib/backup.ts 의 LIMITS 와 맞춘다.
     function allowedUsers() {
-      return ['REPLACE_WITH_YOUR_UID'];
+      return ['rYWFaFtVB0h5cwmuYamIFh5x7xu1'];
     }
 
     function isOwner(uid) {
