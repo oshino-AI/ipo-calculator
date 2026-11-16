@@ -29,12 +29,45 @@ service cloud.firestore {
       return !(key in data) || (data[key] is number && data[key] >= 0 && data[key] <= max);
     }
 
-    function optList(data, key) {
-      return !(key in data) || (data[key] is list && data[key].size() <= 50);
+    // 규칙에는 반복문이 없어서 목록의 0~29번 칸을 하나씩 검사한다.
+    // 목록 길이를 넘는 칸은 바로 통과하므로 보통은 몇 칸만 검사한다.
+    function strAt(l, i) {
+      return l.size() <= i || (l[i] is string && l[i].size() >= 1 && l[i].size() <= 40);
     }
 
-    function optMap(data, key) {
-      return !(key in data) || (data[key] is map && data[key].size() <= 50);
+    function numAt(l, i, max) {
+      return l.size() <= i || (l[i] is number && l[i] >= 0 && l[i] <= max);
+    }
+
+    function strList(l) {
+      return l.size() <= 30
+        && strAt(l, 0) && strAt(l, 1) && strAt(l, 2) && strAt(l, 3) && strAt(l, 4)
+        && strAt(l, 5) && strAt(l, 6) && strAt(l, 7) && strAt(l, 8) && strAt(l, 9)
+        && strAt(l, 10) && strAt(l, 11) && strAt(l, 12) && strAt(l, 13) && strAt(l, 14)
+        && strAt(l, 15) && strAt(l, 16) && strAt(l, 17) && strAt(l, 18) && strAt(l, 19)
+        && strAt(l, 20) && strAt(l, 21) && strAt(l, 22) && strAt(l, 23) && strAt(l, 24)
+        && strAt(l, 25) && strAt(l, 26) && strAt(l, 27) && strAt(l, 28) && strAt(l, 29);
+    }
+
+    function numList(l, max) {
+      return l.size() <= 30
+        && numAt(l, 0, max) && numAt(l, 1, max) && numAt(l, 2, max) && numAt(l, 3, max) && numAt(l, 4, max)
+        && numAt(l, 5, max) && numAt(l, 6, max) && numAt(l, 7, max) && numAt(l, 8, max) && numAt(l, 9, max)
+        && numAt(l, 10, max) && numAt(l, 11, max) && numAt(l, 12, max) && numAt(l, 13, max) && numAt(l, 14, max)
+        && numAt(l, 15, max) && numAt(l, 16, max) && numAt(l, 17, max) && numAt(l, 18, max) && numAt(l, 19, max)
+        && numAt(l, 20, max) && numAt(l, 21, max) && numAt(l, 22, max) && numAt(l, 23, max) && numAt(l, 24, max)
+        && numAt(l, 25, max) && numAt(l, 26, max) && numAt(l, 27, max) && numAt(l, 28, max) && numAt(l, 29, max);
+    }
+
+    // 증권사 이름 목록: 글자 1~40자, 최대 30개
+    function optList(data, key) {
+      return !(key in data) || (data[key] is list && strList(data[key]));
+    }
+
+    // 증권사별 금액·수량: 이름은 1~40자, 값은 0 이상 max 이하 숫자, 최대 30개
+    function optMap(data, key, max) {
+      return !(key in data)
+        || (data[key] is map && strList(data[key].keys()) && numList(data[key].values(), max));
     }
 
     function isValidSettings(data) {
@@ -48,8 +81,8 @@ service cloud.firestore {
         && optNumber(data, 'sellFeeRate', 10)
         && optNumber(data, 'defaultSubFee', 100000)
         && optNumber(data, 'defaultMinQty', 1000000)
-        && optMap(data, 'brokerSubFee')
-        && optMap(data, 'brokerMinQty');
+        && optMap(data, 'brokerSubFee', 100000)
+        && optMap(data, 'brokerMinQty', 1000000);
     }
 
     // 각 계정은 자기 기록만 읽고 쓸 수 있다.

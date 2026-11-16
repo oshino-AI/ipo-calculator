@@ -9,7 +9,7 @@ export interface Backup {
 // firestore.rules의 상한과 맞춘다. 규칙을 바꾸면 여기도 함께 바꾼다.
 export const LIMITS = {
   brokerName: 40,
-  brokers: 50,
+  brokers: 30,
   ipoNo: 10_000_000,
   qty: 1_000_000,
   price: 100_000_000,

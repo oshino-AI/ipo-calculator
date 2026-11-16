@@ -9,7 +9,7 @@ const DATA_KEY = "ipos-v1";
 /** 저장된 로그인을 확인하는 동안 기다리는 최대 시간. 넘으면 이 기기 기록으로 먼저 연다. */
 const AUTH_WAIT_MS = 4000;
 
-import type { Backup } from "./backup";
+import { sanitizeSettings, type Backup } from "./backup";
 export { parseBackup, type Backup } from "./backup";
 
 /** 허용되지 않은 계정으로 로그인했을 때 보여줄 안내 */
@@ -157,7 +157,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       cloudUid.current = uid;
       stopData = cloud.subscribe(uid, {
         onRecords: setRecords,
-        onSettings: (remote) => setSettings({ ...DEFAULT_SETTINGS, ...remote }),
+        onSettings: (remote) => setSettings(sanitizeSettings(remote)),
         onStatus: setCloudState,
         onError: onCloudError,
       });
@@ -168,7 +168,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         const saved = await get<{ settings: Settings; records: SubRecord[] }>(STATE_KEY);
         if (saved) {
           hasLocalState.current = true;
-          setSettings({ ...DEFAULT_SETTINGS, ...saved.settings });
+          setSettings(sanitizeSettings(saved.settings));
           setRecords(saved.records ?? []);
         }
       } catch {

@@ -66,7 +66,11 @@ describe("본인", () => {
     await assertFails(setDoc(doc(alice(), "users/alice/records/big"), { ...record, sellPrice: -1 }));
     await assertFails(setDoc(doc(alice(), "users/alice/records/a.b"), record));
     await assertFails(setDoc(doc(alice(), "users/alice/meta/settings"), { taxRate: "0.2" }));
-    await assertFails(setDoc(doc(alice(), "users/alice/meta/settings"), { myBrokers: Array(51).fill("KB증권") }));
+    await assertFails(setDoc(doc(alice(), "users/alice/meta/settings"), { myBrokers: Array(31).fill("KB증권") }));
+    await assertFails(setDoc(doc(alice(), "users/alice/meta/settings"), { myBrokers: ["KB증권", 3] }));
+    await assertFails(setDoc(doc(alice(), "users/alice/meta/settings"), { feeFreeBrokers: ["x".repeat(41)] }));
+    await assertFails(setDoc(doc(alice(), "users/alice/meta/settings"), { brokerSubFee: { 대신증권: -1 } }));
+    await assertFails(setDoc(doc(alice(), "users/alice/meta/settings"), { brokerMinQty: { 대신증권: "10" } }));
     await assertSucceeds(setDoc(doc(alice(), "users/alice/meta/settings"), { brokerSubFee: { 대신증권: 1500 } }));
   });
 });
