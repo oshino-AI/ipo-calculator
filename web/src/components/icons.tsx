@@ -13,7 +13,14 @@ export const MenuIcon = () => (
   </svg>
 );
 
-export const CloseIcon = ({ size = 24 }: { size?: number }) => (
+export const RefreshIcon = ({ size = 20 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
+    <path d="M20 11a8 8 0 1 0-2.34 5.66" />
+    <path d="M20 4v7h-7" />
+  </svg>
+);
+
+export const CloseIcon =({ size = 24 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
     <path d="M6 6l12 12M18 6L6 18" />
   </svg>

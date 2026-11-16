@@ -3,6 +3,7 @@ import { csvCell } from "../lib/backup";
 import { computeRecord, subFeeFor } from "../lib/calc";
 import { parseAmount, shortBroker } from "../lib/format";
 import { parseBackup, useStore, type Backup, type CloudState } from "../lib/store";
+import { RefreshIcon } from "./icons";
 import { Sheet } from "./Sheet";
 
 const CLOUD_LABEL: Record<CloudState, string> = {
@@ -212,15 +213,22 @@ export function SettingsSheet({ onClose, onToast }: { onClose: () => void; onToa
         }}
       />
 
-      <h3 className="section-title">공모주 정보</h3>
+      <div className="section-head">
+        <h3 className="section-title">공모주 정보</h3>
+        <button
+          className={`icon-btn small${dataStatus === "loading" ? " spinning" : ""}`}
+          aria-label={dataStatus === "loading" ? "공모주 정보 받는 중" : "공모주 정보 다시 받기"}
+          disabled={dataStatus === "loading"}
+          onClick={reload}
+        >
+          <RefreshIcon />
+        </button>
+      </div>
       <p className="hint">
         마지막 업데이트: {data ? data.updatedAt.replace("T", " ").slice(0, 16) : "없음"}
         <br />
         출처: 38커뮤니케이션, 네이버 증권. 시초가는 상장일 수집 시점 이후에 들어와요.
       </p>
-      <button className="btn" disabled={dataStatus === "loading"} onClick={reload}>
-        {dataStatus === "loading" ? "받는 중..." : "지금 다시 받기"}
-      </button>
     </Sheet>
   );
 }

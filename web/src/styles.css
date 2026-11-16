@@ -617,8 +617,44 @@ main {
 }
 
 .btn-row .btn {
-  flex: 1 1 auto;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0 8px;
   font-size: 14px;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 22px;
+  margin-bottom: 8px;
+}
+
+.section-head .section-title {
+  margin: 0;
+}
+
+.icon-btn.small {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.icon-btn.spinning svg {
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-btn.spinning svg {
+    animation: none;
+  }
 }
 
 .picker {
