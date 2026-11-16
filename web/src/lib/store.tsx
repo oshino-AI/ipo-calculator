@@ -9,11 +9,12 @@ const DATA_KEY = "ipos-v1";
 /** 저장된 로그인을 확인하는 동안 기다리는 최대 시간. 넘으면 이 기기 기록으로 먼저 연다. */
 const AUTH_WAIT_MS = 4000;
 
-export interface Backup {
-  version: 1;
-  settings?: Settings;
-  records: SubRecord[];
-}
+import type { Backup } from "./backup";
+export { parseBackup, type Backup } from "./backup";
+
+/** 허용되지 않은 계정으로 로그인했을 때 보여줄 안내 */
+const NOT_ALLOWED_NOTICE = "이 Google 계정은 이 앱에 등록되어 있지 않아요. 설정에서 로그아웃한 뒤 등록된 계정으로 로그인해 주세요.";
+const isPermissionDenied = (error: unknown) => (error as { code?: string } | null)?.code === "permission-denied";
 
 type DataStatus = "loading" | "fresh" | "cached" | "failed";
 
@@ -68,25 +69,6 @@ function normalizeData(data: IpoData): IpoData {
   };
 }
 
-/** 가져온 백업 파일이 앱에서 쓸 수 있는 형식인지 확인한다. */
-export function parseBackup(text: string): Backup {
-  const raw = JSON.parse(text);
-  if (!raw || !Array.isArray(raw.records)) throw new Error("기록이 없는 파일이에요");
-  const records: SubRecord[] = raw.records.map((r: SubRecord) => {
-    if (typeof r.ipoNo !== "number" || typeof r.broker !== "string" || typeof r.qty !== "number") {
-      throw new Error("형식이 맞지 않는 기록이 있어요");
-    }
-    const sell = r.sellPrice;
-    return {
-      id: String(r.id ?? crypto.randomUUID()),
-      ipoNo: r.ipoNo,
-      broker: r.broker,
-      qty: r.qty,
-      sellPrice: typeof sell === "number" ? sell : null,
-    };
-  });
-  return { version: 1, records, settings: raw.settings ? { ...DEFAULT_SETTINGS, ...raw.settings } : undefined };
-}
 
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
@@ -131,6 +113,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     if (signingOut.current) return;
     console.error("계정 연동 오류", error);
     setCloudState("error");
+    if (isPermissionDenied(error)) setCloudNotice(NOT_ALLOWED_NOTICE);
   }, []);
 
   /** 쓰기 실패는 화면 상태로 알린다. 오프라인이면 실패하지 않고 대기한다. */
@@ -162,7 +145,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         } catch (error) {
           // 합치지 못하면 이 기기 기록을 그대로 두고, 다음에 열 때 다시 시도한다.
           onCloudError(error);
-          setCloudNotice("이 기기 기록을 계정에 합치지 못했어요. 인터넷 연결을 확인한 뒤 앱을 다시 열어 주세요.");
+          setCloudNotice(
+            isPermissionDenied(error)
+              ? NOT_ALLOWED_NOTICE
+              : "이 기기 기록을 계정에 합치지 못했어요. 인터넷 연결을 확인한 뒤 앱을 다시 열어 주세요.",
+          );
           return;
         }
       }

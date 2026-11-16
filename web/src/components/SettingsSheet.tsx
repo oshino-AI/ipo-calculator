@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { csvCell } from "../lib/backup";
 import { computeRecord, subFeeFor } from "../lib/calc";
 import { parseAmount, shortBroker } from "../lib/format";
 import { parseBackup, useStore, type Backup, type CloudState } from "../lib/store";
@@ -69,7 +70,7 @@ export function SettingsSheet({ onClose, onToast }: { onClose: () => void; onToa
       return [
         ipo?.name ?? r.ipoNo, ipo?.listDate ?? "", r.broker, r.qty, ipo?.price ?? "", ipo?.open ?? "",
         c.sellPrice ?? "", c.profit ?? "", c.rate?.toFixed(2) ?? "", label[c.status],
-      ].map((v) => `"${String(v).replaceAll('"', '""')}"`).join(",");
+      ].map(csvCell).join(",");
     });
     download(`공모주_기록_${stamp()}.csv`, "﻿" + [head.join(","), ...lines].join("\r\n"), "text/csv");
   };

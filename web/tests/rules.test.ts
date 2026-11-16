@@ -9,7 +9,15 @@ let env: RulesTestEnvironment;
 beforeAll(async () => {
   env = await initializeTestEnvironment({
     projectId: "demo-ipo",
-    firestore: { rules: readFileSync("../firestore.rules", "utf8"), host: "127.0.0.1", port: 8080 },
+    firestore: {
+      // 실제 UID 대신 시험용 계정 alice, bob을 허용 목록에 넣고 시험한다. mallory는 목록에 없다.
+      rules: readFileSync("../firestore.rules", "utf8").replace(
+        /function allowedUsers\(\) \{\s*return \[[^\]]*\];/,
+        "function allowedUsers() { return ['alice', 'bob'];",
+      ),
+      host: "127.0.0.1",
+      port: 8080,
+    },
   });
 });
 
@@ -25,6 +33,7 @@ beforeEach(async () => {
 
 const alice = () => env.authenticatedContext("alice").firestore();
 const bob = () => env.authenticatedContext("bob").firestore();
+const mallory = () => env.authenticatedContext("mallory").firestore();
 const guest = () => env.unauthenticatedContext().firestore();
 
 describe("본인", () => {
@@ -50,6 +59,23 @@ describe("본인", () => {
 
   it("정해진 항목 외의 설정은 저장할 수 없다", async () => {
     await assertFails(setDoc(doc(alice(), "users/alice/meta/settings"), { admin: true }));
+  });
+
+  it("범위를 넘는 값과 잘못된 ID는 저장할 수 없다", async () => {
+    await assertFails(setDoc(doc(alice(), "users/alice/records/big"), { ...record, qty: 1000001 }));
+    await assertFails(setDoc(doc(alice(), "users/alice/records/big"), { ...record, sellPrice: -1 }));
+    await assertFails(setDoc(doc(alice(), "users/alice/records/a.b"), record));
+    await assertFails(setDoc(doc(alice(), "users/alice/meta/settings"), { taxRate: "0.2" }));
+    await assertFails(setDoc(doc(alice(), "users/alice/meta/settings"), { myBrokers: Array(51).fill("KB증권") }));
+    await assertSucceeds(setDoc(doc(alice(), "users/alice/meta/settings"), { brokerSubFee: { 대신증권: 1500 } }));
+  });
+});
+
+describe("허용 목록에 없는 계정", () => {
+  it("로그인해도 자기 경로조차 읽거나 쓸 수 없다", async () => {
+    await assertFails(getDocs(collection(mallory(), "users/mallory/records")));
+    await assertFails(setDoc(doc(mallory(), "users/mallory/records/r1"), record));
+    await assertFails(setDoc(doc(mallory(), "users/mallory/meta/settings"), { taxRate: 0.2 }));
   });
 });
 

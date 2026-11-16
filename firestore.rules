@@ -2,31 +2,62 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    // 이 앱을 쓸 수 있는 계정의 UID 목록 (Firebase 콘솔 → Authentication → 사용자 → 사용자 UID).
+    // 목록에 없는 Google 계정은 로그인은 되어도 저장소를 읽거나 쓸 수 없다.
+    // 수치 상한은 web/src/lib/backup.ts 의 LIMITS 와 맞춘다.
+    function allowedUsers() {
+      return ['REPLACE_WITH_YOUR_UID'];
+    }
+
     function isOwner(uid) {
-      return request.auth != null && request.auth.uid == uid;
+      return request.auth != null
+        && request.auth.uid == uid
+        && request.auth.uid in allowedUsers();
     }
 
     function isValidRecord(data) {
       return data.keys().hasOnly(['ipoNo', 'broker', 'qty', 'sellPrice'])
         && data.keys().hasAll(['ipoNo', 'broker', 'qty'])
-        && data.ipoNo is int
+        && data.ipoNo is int && data.ipoNo >= 0 && data.ipoNo <= 10000000
         && data.broker is string && data.broker.size() <= 40
-        && data.qty is int && data.qty >= 0
+        && data.qty is int && data.qty >= 0 && data.qty <= 1000000
         && (!('sellPrice' in data) || data.sellPrice == null
-            || (data.sellPrice is number && data.sellPrice >= 0));
+            || (data.sellPrice is number && data.sellPrice >= 0 && data.sellPrice <= 100000000));
+    }
+
+    function optNumber(data, key, max) {
+      return !(key in data) || (data[key] is number && data[key] >= 0 && data[key] <= max);
+    }
+
+    function optList(data, key) {
+      return !(key in data) || (data[key] is list && data[key].size() <= 50);
+    }
+
+    function optMap(data, key) {
+      return !(key in data) || (data[key] is map && data[key].size() <= 50);
     }
 
     function isValidSettings(data) {
       return data.keys().hasOnly([
-        'myBrokers', 'feeFreeBrokers', 'taxRate', 'sellFeeRate', 'defaultSubFee',
-        'brokerSubFee', 'defaultMinQty', 'brokerMinQty'
-      ]);
+          'myBrokers', 'feeFreeBrokers', 'taxRate', 'sellFeeRate', 'defaultSubFee',
+          'brokerSubFee', 'defaultMinQty', 'brokerMinQty'
+        ])
+        && optList(data, 'myBrokers')
+        && optList(data, 'feeFreeBrokers')
+        && optNumber(data, 'taxRate', 10)
+        && optNumber(data, 'sellFeeRate', 10)
+        && optNumber(data, 'defaultSubFee', 100000)
+        && optNumber(data, 'defaultMinQty', 1000000)
+        && optMap(data, 'brokerSubFee')
+        && optMap(data, 'brokerMinQty');
     }
 
     // 각 계정은 자기 기록만 읽고 쓸 수 있다.
     match /users/{uid}/records/{recordId} {
       allow read, delete: if isOwner(uid);
-      allow create, update: if isOwner(uid) && isValidRecord(request.resource.data);
+      allow create, update: if isOwner(uid)
+        && recordId.matches('^[A-Za-z0-9_-]{1,64}$')
+        && isValidRecord(request.resource.data);
     }
 
     match /users/{uid}/meta/settings {
