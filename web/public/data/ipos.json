@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-17T05:44+09:00",
+ "updatedAt": "2026-11-17T16:56+09:00",
  "warnings": [
   "씨앤엠: 상세 읽기 실패 (ValueError)",
   "제이앤티지: 상세 읽기 실패 (ValueError)"
@@ -26,30 +26,6 @@
     {
      "name": "NH투자증권",
      "limit": 28000
-    }
-   ]
-  },
-  {
-   "no": 2356,
-   "name": "데스틴파워",
-   "market": "코스닥",
-   "code": "273940",
-   "industry": "전동기, 발전기 및 전기 변환장치 제조업",
-   "subStart": "2026-12-14",
-   "subEnd": "2026-12-15",
-   "demandStart": "2026-12-02",
-   "demandEnd": "2026-12-08",
-   "allocDate": "2026-12-17",
-   "payDate": "2026-12-17",
-   "refundDate": "2026-12-17",
-   "bandLow": 8000,
-   "bandHigh": 11000,
-   "depositRate": 50,
-   "offerShares": 2200000,
-   "underwriters": [
-    {
-     "name": "한국투자증권",
-     "limit": 11000
     }
    ]
   },
@@ -106,6 +82,30 @@
    ],
    "floatShares": 4166180,
    "floatPct": 29.07
+  },
+  {
+   "no": 2356,
+   "name": "데스틴파워",
+   "market": "코스닥",
+   "code": "273940",
+   "industry": "전동기, 발전기 및 전기 변환장치 제조업",
+   "subStart": "2026-12-11",
+   "subEnd": "2026-12-14",
+   "demandStart": "2026-12-02",
+   "demandEnd": "2026-12-08",
+   "allocDate": "2026-12-16",
+   "payDate": "2026-12-16",
+   "refundDate": "2026-12-16",
+   "bandLow": 8000,
+   "bandHigh": 11000,
+   "depositRate": 50,
+   "offerShares": 2200000,
+   "underwriters": [
+    {
+     "name": "한국투자증권",
+     "limit": 11000
+    }
+   ]
   },
   {
    "no": 2348,
@@ -450,7 +450,10 @@
    ],
    "floatShares": 2167869,
    "floatPct": 36.81,
-   "listDate": "2026-11-30"
+   "listDate": "2026-11-30",
+   "price": 19000,
+   "instCompetition": "173.42:1",
+   "lockupPct": 0.57
   },
   {
    "no": 2321,
@@ -630,7 +633,16 @@
    "subCompetition": "1343.32:1",
    "proportional": "2687:1",
    "floatShares": 2172890,
-   "floatPct": 22.71
+   "floatPct": 22.71,
+   "open38": 31000,
+   "close38": 18170,
+   "open": 31000,
+   "high": 34850,
+   "low": 16990,
+   "close": 17000,
+   "priceCheck": false,
+   "priceSource": "naver",
+   "priceFinal": true
   },
   {
    "no": 2342,
