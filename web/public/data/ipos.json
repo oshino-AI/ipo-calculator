@@ -1,10 +1,35 @@
 {
- "updatedAt": "2026-11-17T16:56+09:00",
+ "updatedAt": "2026-11-17T21:14+09:00",
  "warnings": [
+  "에스에프씨(유가): 상세 읽기 실패 (ValueError)",
   "씨앤엠: 상세 읽기 실패 (ValueError)",
   "제이앤티지: 상세 읽기 실패 (ValueError)"
  ],
  "ipos": [
+  {
+   "no": 2361,
+   "name": "이나인페이",
+   "market": "코스닥",
+   "code": "0013H0",
+   "industry": "금융 지원 서비스업",
+   "subStart": "2026-12-16",
+   "subEnd": "2026-12-17",
+   "demandStart": "2026-12-07",
+   "demandEnd": "2026-12-11",
+   "allocDate": "2026-12-21",
+   "payDate": "2026-12-21",
+   "refundDate": "2026-12-21",
+   "bandLow": 7500,
+   "bandHigh": 10500,
+   "depositRate": 50,
+   "offerShares": 6400000,
+   "underwriters": [
+    {
+     "name": "한국투자증권",
+     "limit": 31000
+    }
+   ]
+  },
   {
    "no": 2355,
    "name": "KTE",
