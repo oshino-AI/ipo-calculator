@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-18T04:28+09:00",
+ "updatedAt": "2026-11-18T16:31+09:00",
  "warnings": [
   "에스에프씨(유가): 상세 읽기 실패 (ValueError)",
   "씨앤엠: 상세 읽기 실패 (ValueError)",
@@ -107,6 +107,30 @@
    ],
    "floatShares": 4166180,
    "floatPct": 29.07
+  },
+  {
+   "no": 2362,
+   "name": "엠디에스코리아",
+   "market": "코스닥",
+   "code": "0159M0",
+   "industry": "기타 식료품 제조업",
+   "subStart": "2026-12-14",
+   "subEnd": "2026-12-15",
+   "demandStart": "2026-12-03",
+   "demandEnd": "2026-12-09",
+   "allocDate": "2026-12-17",
+   "payDate": "2026-12-17",
+   "refundDate": "2026-12-17",
+   "bandLow": 9500,
+   "bandHigh": 11500,
+   "depositRate": 50,
+   "offerShares": 2250000,
+   "underwriters": [
+    {
+     "name": "미래에셋증권",
+     "limit": 33000
+    }
+   ]
   },
   {
    "no": 2356,
@@ -409,7 +433,9 @@
      "limit": 11000
     }
    ],
-   "listDate": "2026-12-02"
+   "listDate": "2026-12-02",
+   "floatShares": 7861700,
+   "floatPct": 36.29
   },
   {
    "no": 2349,
@@ -626,7 +652,16 @@
    "floatPct": 64.99,
    "listDate": "2026-11-18",
    "subCompetition": "834.73:1",
-   "proportional": "1669:1"
+   "proportional": "1669:1",
+   "open38": 15100,
+   "close38": 13320,
+   "open": 15100,
+   "high": 18690,
+   "low": 12840,
+   "close": 12870,
+   "priceCheck": false,
+   "priceSource": "naver",
+   "priceFinal": true
   },
   {
    "no": 2338,
