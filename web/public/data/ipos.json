@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-18T16:31+09:00",
+ "updatedAt": "2026-11-18T21:01+09:00",
  "warnings": [
   "에스에프씨(유가): 상세 읽기 실패 (ValueError)",
   "씨앤엠: 상세 읽기 실패 (ValueError)",
@@ -356,7 +356,9 @@
      "name": "NH투자증권",
      "limit": 21000
     }
-   ]
+   ],
+   "floatShares": 3045747,
+   "floatPct": 29.49
   },
   {
    "no": 2340,
