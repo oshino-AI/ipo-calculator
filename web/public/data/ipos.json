@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-20T16:18+09:00",
+ "updatedAt": "2026-11-20T20:59+09:00",
  "warnings": [
   "아델: 상세 읽기 실패 (ValueError)",
   "에스에프씨(유가): 상세 읽기 실패 (ValueError)",
@@ -7,6 +7,34 @@
   "제이앤티지: 상세 읽기 실패 (ValueError)"
  ],
  "ipos": [
+  {
+   "no": 2363,
+   "name": "피지티",
+   "market": "코스닥",
+   "code": "483490",
+   "industry": "그 외 기타 화학제품 제조업",
+   "subStart": "2026-12-17",
+   "subEnd": "2026-12-18",
+   "demandStart": "2026-12-08",
+   "demandEnd": "2026-12-14",
+   "allocDate": "2026-12-22",
+   "payDate": "2026-12-22",
+   "refundDate": "2026-12-22",
+   "bandLow": 18000,
+   "bandHigh": 20000,
+   "depositRate": 50,
+   "offerShares": 1400000,
+   "underwriters": [
+    {
+     "name": "한국투자증권",
+     "limit": 5500
+    },
+    {
+     "name": "유안타증권",
+     "limit": 1500
+    }
+   ]
+  },
   {
    "no": 2361,
    "name": "이나인페이",
