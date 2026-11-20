@@ -1,6 +1,7 @@
 {
- "updatedAt": "2026-11-20T04:14+09:00",
+ "updatedAt": "2026-11-20T16:18+09:00",
  "warnings": [
+  "아델: 상세 읽기 실패 (ValueError)",
   "에스에프씨(유가): 상세 읽기 실패 (ValueError)",
   "씨앤엠: 상세 읽기 실패 (ValueError)",
   "제이앤티지: 상세 읽기 실패 (ValueError)"
@@ -622,7 +623,16 @@
    "instCompetition": "1051.38:1",
    "lockupPct": 4.16,
    "subCompetition": "1851.14:1",
-   "proportional": "3702:1"
+   "proportional": "3702:1",
+   "open38": 10130,
+   "close38": 6050,
+   "open": 10130,
+   "high": 11300,
+   "low": 5960,
+   "close": 6160,
+   "priceCheck": false,
+   "priceSource": "naver",
+   "priceFinal": true
   },
   {
    "no": 2331,
