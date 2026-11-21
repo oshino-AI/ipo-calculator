@@ -11,6 +11,7 @@
     "test:rules": "firebase --project demo-ipo --config ../firebase.json emulators:exec --only firestore \"vitest run --config vitest.rules.config.ts\""
   },
   "dependencies": {
+    "@fontsource/ibm-plex-sans-kr": "^5.3.0",
     "firebase": "^13.2.0",
     "idb-keyval": "^6.3.0",
     "react": "^19.3.1",

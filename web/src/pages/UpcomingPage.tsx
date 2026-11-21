@@ -1,6 +1,17 @@
 import { useMemo } from "react";
 import { SearchField } from "../components/SearchField";
-import { fullDate, ipoStage, matchesName, shortBroker, shortDate, todayIso, type IpoStage } from "../lib/format";
+import {
+  fullDate,
+  ipoStage,
+  matchesName,
+  openGapRate,
+  shortBroker,
+  shortDate,
+  signedPct,
+  todayIso,
+  toneOf,
+  type IpoStage,
+} from "../lib/format";
 import { useStore } from "../lib/store";
 import type { Ipo } from "../types";
 
@@ -27,6 +38,17 @@ function dateLabel(ipo: Ipo, stage: IpoStage): string {
   const start = shortDate(ipo.subStart);
   const end = shortDate(ipo.subEnd);
   return start && end ? `${start} ~ ${end}` : start || "미정";
+}
+
+/** 공모가 대비 시초가 등락률. 둘 중 하나라도 없으면 아직 모른다고 보여준다. */
+function OpenGap({ ipo }: { ipo: Ipo }) {
+  const rate = openGapRate(ipo);
+  if (rate === null) return <small className="gap">시초가 미정</small>;
+  return (
+    <small className={`gap ${toneOf(rate)}`} aria-label={`공모가 대비 시초가 ${signedPct(rate)}`}>
+      {signedPct(rate)}
+    </small>
+  );
 }
 
 interface Props {
@@ -114,7 +136,10 @@ export function UpcomingPage(props: Props) {
                     {mine && <em className="tag">내 증권사</em>}
                   </span>
                 </span>
-                <span className="row-side num">{dateLabel(ipo, stage)}</span>
+                <span className="row-side num">
+                  {dateLabel(ipo, stage)}
+                  {stage === "listed" && <OpenGap ipo={ipo} />}
+                </span>
               </button>
             </li>
           );

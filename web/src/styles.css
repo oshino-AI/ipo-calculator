@@ -1,41 +1,60 @@
+/*
+ * 통장 콘셉트: 연한 하늘색 표지(상단)와 장부처럼 줄이 그어진 속지(목록).
+ * 키 컬러는 연한 파란색. 바탕이 연하므로 그 위의 글자는 짙은 남색으로 둔다.
+ * 오름은 빨강, 내림은 파랑(국내 시세 관례).
+ */
 :root {
   color-scheme: light dark;
-  --bg: #ffffff;
-  --surface: #f5f6f8;
-  --line: #e4e6eb;
-  --ink: #16181d;
-  --ink-2: #5a606b;
-  --ink-3: #6f7581;
-  --primary: #16181d;
-  --on-primary: #ffffff;
+  --bg: #fcfdfe;
+  --surface: #eef3f8;
+  --line: #dde4ec;
+  --ink: #12202e;
+  --ink-2: #4b5a6a;
+  --ink-3: #5c6a79;
+  --primary: #cfe4fa;
+  --on-primary: #0e3a66;
+  --cover: #e3f0fc;
+  --on-cover: #0e2a47;
+  --on-cover-2: #4f6b88;
+  --indicator: #3a86d4;
+  --focus: #2f74c0;
   --up: #c9281f;
   --down: #1f5bbf;
+  --up-bg: #fbe9e7;
+  --down-bg: #e6eefb;
   --gain: #d92d2a;
   --loss: #2563c9;
   --danger: #b3261e;
-  --tag-bg: #e9ecf1;
+  --tag-bg: #e3e9e5;
   --live-bg: #fde8e7;
-  --shadow: 0 -8px 30px rgba(0, 0, 0, 0.14);
+  --shadow: 0 -10px 30px rgba(19, 32, 28, 0.16);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #16181d;
-    --surface: #22252c;
-    --line: #33373f;
-    --ink: #f1f2f4;
-    --ink-2: #b4b8c0;
-    --ink-3: #9ba0aa;
-    --primary: #f1f2f4;
-    --on-primary: #16181d;
+    --bg: #0f141a;
+    --surface: #18202a;
+    --line: #26313d;
+    --ink: #e7eef5;
+    --ink-2: #a8b5c3;
+    --ink-3: #8f9cab;
+    --primary: #9ccbf5;
+    --on-primary: #0b1a2a;
+    --cover: #16263a;
+    --on-cover: #e6f0fa;
+    --on-cover-2: #9db4cc;
+    --indicator: #8cc4f5;
+    --focus: #9ccbf5;
     --up: #ff7b74;
     --down: #7fb0f5;
+    --up-bg: #3a1f1d;
+    --down-bg: #1a2840;
     --gain: #e5504a;
     --loss: #4a8ce6;
     --danger: #ff8a80;
-    --tag-bg: #33373f;
-    --live-bg: #4a2422;
-    --shadow: 0 -8px 30px rgba(0, 0, 0, 0.5);
+    --tag-bg: #22302b;
+    --live-bg: #3f2220;
+    --shadow: 0 -10px 30px rgba(0, 0, 0, 0.55);
   }
 }
 
@@ -52,9 +71,12 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  font-family: "IBM Plex Sans KR", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  /* 글꼴을 받기 전 대체 글꼴도 같은 크기로 보이게 해서 화면이 흔들리지 않게 한다. */
+  font-size-adjust: from-font;
   font-size: 16px;
-  line-height: 1.45;
+  line-height: 1.5;
+  word-break: keep-all;
 }
 
 button,
@@ -76,7 +98,7 @@ button:disabled {
 }
 
 :focus-visible {
-  outline: 2px solid var(--loss);
+  outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
 
@@ -135,13 +157,15 @@ main {
   grid-template-columns: 44px 1fr 44px;
   align-items: center;
   padding: env(safe-area-inset-top) 8px 0;
-  background: var(--bg);
-  border-bottom: 1px solid var(--line);
+  background: var(--cover);
+  color: var(--on-cover);
 }
+
 
 .topbar h1 {
   font-size: 18px;
   font-weight: 700;
+  letter-spacing: -0.01em;
   text-align: center;
 }
 
@@ -161,15 +185,15 @@ main {
 }
 
 .tab {
-  height: 44px;
-  color: var(--ink-2);
+  min-height: 46px;
+  color: var(--on-cover-2);
   font-weight: 600;
-  border-bottom: 2px solid transparent;
+  border-bottom: 3px solid transparent;
 }
 
 .tab.active {
-  color: var(--ink);
-  border-bottom-color: var(--ink);
+  color: var(--on-cover);
+  border-bottom-color: var(--indicator);
 }
 
 /* 안내 */
@@ -244,16 +268,17 @@ main {
 }
 
 .subtab {
-  height: 36px;
+  min-height: 36px;
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 8px;
+  background: var(--bg);
   color: var(--ink-2);
   font-size: 13px;
   font-weight: 600;
 }
 
 .subtab.on {
-  border-color: var(--primary);
+  border-color: var(--indicator);
   background: var(--primary);
   color: var(--on-primary);
 }
@@ -341,13 +366,13 @@ main {
   accent-color: var(--primary);
 }
 
+/* 장부의 머리줄: 칸 이름 아래 굵은 선 하나 */
 .list-head {
   display: flex;
   justify-content: space-between;
-  margin: 4px 16px 0;
+  margin: 8px 16px 0;
   padding: 6px 12px;
-  border-radius: 8px;
-  background: var(--surface);
+  border-bottom: 2px solid var(--ink);
   color: var(--ink-2);
   font-size: 13px;
   font-weight: 600;
@@ -362,6 +387,10 @@ main {
   font-size: 14px;
 }
 
+.list {
+  margin-inline: 16px;
+}
+
 .list li + li {
   border-top: 1px solid var(--line);
 }
@@ -373,7 +402,7 @@ main {
   gap: 12px;
   width: 100%;
   min-height: 64px;
-  padding: 10px 28px;
+  padding: 10px 12px;
   text-align: left;
 }
 
@@ -412,11 +441,32 @@ main {
   font-size: 13px;
 }
 
+/* 공모가 대비 시초가: 상장 완료 목록에서 가장 먼저 눈에 들어와야 하는 값 */
+.row-side .gap {
+  margin-top: 3px;
+  padding: 1px 7px;
+  border-radius: 4px;
+  background: var(--tag-bg);
+  color: var(--ink-2);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.row-side .gap.up {
+  background: var(--up-bg);
+  color: var(--up);
+}
+
+.row-side .gap.down {
+  background: var(--down-bg);
+  color: var(--down);
+}
+
 .tag {
   display: inline-block;
   margin-left: 6px;
   padding: 1px 6px;
-  border-radius: 6px;
+  border-radius: 4px;
   background: var(--tag-bg);
   color: var(--ink-2);
   font-size: 11px;
@@ -457,7 +507,8 @@ main {
   width: 100%;
   max-width: 560px;
   max-height: 90dvh;
-  border-radius: 18px 18px 0 0;
+  border-radius: 20px 20px 0 0;
+  border-top: 4px solid var(--cover);
 }
 
 .sheet-drawer {
@@ -496,10 +547,10 @@ main {
 
 .pill {
   flex: none;
-  height: 36px;
+  min-height: 36px;
   padding: 0 14px;
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
 }
@@ -515,7 +566,11 @@ main {
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  padding: 9px 0;
+  padding: 10px 0;
+}
+
+.info-row + .info-row {
+  border-top: 1px solid var(--line);
 }
 
 .info-row dt {
@@ -571,12 +626,13 @@ main {
   min-height: 46px;
   padding: 0 16px;
   border: 1px solid var(--line);
-  border-radius: 12px;
+  border-radius: 10px;
+  background: var(--bg);
   font-weight: 600;
 }
 
 .btn.primary {
-  border-color: var(--primary);
+  border-color: var(--indicator);
   background: var(--primary);
   color: var(--on-primary);
 }
@@ -739,12 +795,12 @@ main {
 }
 
 .radio:has(input:focus-visible) {
-  outline: 2px solid var(--loss);
+  outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
 
 .radio.on {
-  border-color: var(--primary);
+  border-color: var(--indicator);
   background: var(--primary);
   color: var(--on-primary);
   font-weight: 600;
@@ -971,9 +1027,6 @@ main {
   margin-left: 16px;
 }
 
-.profit .row {
-  padding-inline: 16px;
-}
 
 /* 그래프 */
 .chart {
@@ -1056,7 +1109,7 @@ main {
 }
 
 .hit:focus-visible {
-  stroke: var(--loss);
+  stroke: var(--focus);
   stroke-width: 2;
 }
 
@@ -1122,6 +1175,10 @@ main {
   .row:hover,
   .icon-btn:hover {
     background: var(--surface);
+  }
+
+  .topbar .icon-btn:hover {
+    background: color-mix(in srgb, var(--on-cover) 10%, transparent);
   }
 }
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { minDeposit } from "../lib/calc";
-import { dateRange, fullDate, shortBroker, won } from "../lib/format";
+import { dateRange, fullDate, openGapRate, shortBroker, signedPct, todayIso, won } from "../lib/format";
 import { useStore } from "../lib/store";
 import type { Ipo } from "../types";
 import { Sheet } from "./Sheet";
@@ -20,13 +20,10 @@ function priceText(ipo: Ipo): string {
   return "미정";
 }
 
-function competitionText(ipo: Ipo): string {
-  if (!ipo.instCompetition && !ipo.subCompetition) return "미정";
-  const parts = [];
-  if (ipo.instCompetition) parts.push(`기관 ${ipo.instCompetition}`);
-  if (ipo.subCompetition) parts.push(`청약 ${ipo.subCompetition}`);
-  if (ipo.proportional) parts.push(`비례 ${ipo.proportional}`);
-  return parts.join(" · ");
+function openText(ipo: Ipo): string {
+  const rate = openGapRate(ipo);
+  if (!ipo.open) return "미정";
+  return rate === null ? won(ipo.open) : `${won(ipo.open)} (공모가 대비 ${signedPct(rate)})`;
 }
 
 function floatText(ipo: Ipo): string {
@@ -64,7 +61,9 @@ export function IpoDetail({ ipoNo, onClose, onToast }: { ipoNo: number; onClose:
     <Sheet title={ipo.name} aside={toggle} onClose={onClose}>
       {expanded && (
         <dl className="info expanded">
-          <Row label="경쟁률" value={competitionText(ipo)} />
+          <Row label="기관 경쟁률" value={ipo.instCompetition ?? "미정"} />
+          <Row label="청약 경쟁률" value={ipo.subCompetition ?? "미정"} />
+          <Row label="비례 경쟁률" value={ipo.proportional ?? "미정"} />
           <Row label="의무보유 확약" value={ipo.lockupPct != null ? `${ipo.lockupPct}%` : "미정"} />
           <Row label="유통가능 주식" value={floatText(ipo)} />
           <Row label="업종" value={ipo.industry ?? "확인 불가"} />
@@ -75,6 +74,7 @@ export function IpoDetail({ ipoNo, onClose, onToast }: { ipoNo: number; onClose:
         <Row label="공모 일정" value={dateRange(ipo.subStart, ipo.subEnd)} />
         <Row label="배정·환불" value={fullDate(ipo.refundDate ?? ipo.allocDate) || "미정"} />
         <Row label="상장일" value={fullDate(ipo.listDate) || "미정"} />
+        {ipo.listDate && ipo.listDate <= todayIso() && <Row label="시초가" value={openText(ipo)} />}
       </dl>
 
       <h3 className="section-title">증권사별 최소 청약증거금</h3>

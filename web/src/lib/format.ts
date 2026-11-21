@@ -26,7 +26,13 @@ export const signedWon = (n: number) => `${n > 0 ? "+" : n < 0 ? "−" : ""}${wo
 
 export const signedPct = (n: number) => `${n > 0 ? "+" : n < 0 ? "−" : ""}${Math.abs(n).toFixed(2)}%`;
 
-export const toneOf = (n: number | null | undefined) => (!n ? "" : n > 0 ? "up" : "down");
+/** 공모가 대비 시초가 등락률(%). 공모가나 시초가가 없으면 null. */
+export function openGapRate(ipo: { price?: number; open?: number }): number | null {
+  if (!ipo.price || !ipo.open) return null;
+  return (ipo.open / ipo.price - 1) * 100;
+}
+
+export const toneOf =(n: number | null | undefined) => (!n ? "" : n > 0 ? "up" : "down");
 
 /** 2026-11-05 -> 11.05 */
 export const shortDate = (iso?: string) => (iso ? `${iso.slice(5, 7)}.${iso.slice(8, 10)}` : "");
