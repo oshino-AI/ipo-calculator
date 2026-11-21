@@ -584,14 +584,26 @@ main {
   font-variant-numeric: tabular-nums;
 }
 
-.info.expanded {
-  margin-bottom: 8px;
-  padding: 4px 12px;
+/* 자세히: 시트 제목 줄 아래에 떠 있는 창. 위치와 폭은 IpoDetail의 placeBelowHead가 정한다. */
+.detail-pop {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  padding: 2px 12px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid var(--line);
   border-radius: 12px;
-  background: var(--surface);
+  background: var(--bg);
+  color: var(--ink);
+  box-shadow: 0 10px 30px rgba(19, 32, 28, 0.18);
 }
 
-.info.expanded dd {
+.detail-pop::backdrop {
+  background: transparent;
+}
+
+.detail-pop dd {
   font-weight: 500;
   font-size: 14px;
 }

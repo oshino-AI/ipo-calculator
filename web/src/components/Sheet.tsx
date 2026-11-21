@@ -12,7 +12,12 @@ interface Props {
 /** 화면 아래에서 올라오는 카드, 또는 왼쪽에서 나오는 사이드바. */
 export function Sheet({ title, aside, onClose, variant = "bottom", children }: Props) {
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      // 시트 안의 팝오버 창이 열려 있으면 Esc는 그 창만 닫는다(브라우저가 처리).
+      if (document.querySelector(":popover-open")) return;
+      onClose();
+    };
     document.addEventListener("keydown", onKey);
     const overflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { minDeposit } from "../lib/calc";
 import { dateRange, fullDate, openGapRate, shortBroker, signedPct, todayIso, won } from "../lib/format";
 import { useStore } from "../lib/store";
@@ -26,6 +26,23 @@ function openText(ipo: Ipo): string {
   return rate === null ? won(ipo.open) : `${won(ipo.open)} (공모가 대비 ${signedPct(rate)})`;
 }
 
+/** 시트 안쪽 여백. 창을 내용 폭(기존 회색 상자와 같은 폭)에 맞추는 데 쓴다. */
+const SHEET_INSET = 20;
+
+/**
+ * 팝오버 창을 시트 제목 줄 바로 아래, 시트 내용 폭으로 놓는다.
+ * 제목 줄은 스크롤되지 않으므로 열릴 때와 화면 크기가 바뀔 때만 다시 재면 된다.
+ */
+function placeBelowHead(pop: HTMLElement) {
+  const head = pop.closest(".sheet")?.querySelector(".sheet-head");
+  if (!head) return;
+  const rect = head.getBoundingClientRect();
+  pop.style.top = `${rect.bottom}px`;
+  pop.style.left = `${rect.left + SHEET_INSET}px`;
+  pop.style.width = `${rect.width - SHEET_INSET * 2}px`;
+  pop.style.maxHeight = `${window.innerHeight - rect.bottom - 16}px`;
+}
+
 function floatText(ipo: Ipo): string {
   if (!ipo.floatShares) return "확인 불가";
   return `${ipo.floatShares.toLocaleString("ko-KR")}주 (${ipo.floatPct}%)`;
@@ -33,8 +50,19 @@ function floatText(ipo: Ipo): string {
 
 export function IpoDetail({ ipoNo, onClose, onToast }: { ipoNo: number; onClose: () => void; onToast: (m: string) => void }) {
   const { ipoByNo, settings, records, addRecord } = useStore();
-  const [expanded, setExpanded] = useState(false);
+  const [detailOpen, setDetailOpen] = useState(false);
   const [picking, setPicking] = useState(false);
+  const popId = useId();
+  const popRef = useRef<HTMLDivElement>(null);
+
+  // 창이 열려 있는 동안 화면 크기가 바뀌면 다시 맞춘다.
+  useEffect(() => {
+    if (!detailOpen) return;
+    const onResize = () => popRef.current && placeBelowHead(popRef.current);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [detailOpen]);
+
   const ipo = ipoByNo.get(ipoNo);
   if (!ipo) return null;
 
@@ -52,15 +80,23 @@ export function IpoDetail({ ipoNo, onClose, onToast }: { ipoNo: number; onClose:
   const alreadyDone = onlyBroker !== null && taken.has(onlyBroker);
 
   const toggle = (
-    <button className="pill" aria-expanded={expanded} onClick={() => setExpanded((v) => !v)}>
-      {expanded ? "접기" : "자세히"}
+    <button className="pill" popoverTarget={popId}>
+      {detailOpen ? "접기" : "자세히"}
     </button>
   );
 
   return (
     <Sheet title={ipo.name} aside={toggle} onClose={onClose}>
-      {expanded && (
-        <dl className="info expanded">
+      {/* 자세한 정보는 기존 내용을 밀지 않도록 제목 줄 아래에 떠 있는 창(팝오버)으로 띄운다. */}
+      <div
+        id={popId}
+        ref={popRef}
+        popover="auto"
+        className="detail-pop"
+        onBeforeToggle={(e) => e.newState === "open" && placeBelowHead(e.currentTarget)}
+        onToggle={(e) => setDetailOpen(e.newState === "open")}
+      >
+        <dl className="info">
           <Row label="기관 경쟁률" value={ipo.instCompetition ?? "미정"} />
           <Row label="청약 경쟁률" value={ipo.subCompetition ?? "미정"} />
           <Row label="비례 경쟁률" value={ipo.proportional ?? "미정"} />
@@ -68,7 +104,7 @@ export function IpoDetail({ ipoNo, onClose, onToast }: { ipoNo: number; onClose:
           <Row label="유통가능 주식" value={floatText(ipo)} />
           <Row label="업종" value={ipo.industry ?? "확인 불가"} />
         </dl>
-      )}
+      </div>
       <dl className="info">
         <Row label="공모가" value={priceText(ipo)} />
         <Row label="공모 일정" value={dateRange(ipo.subStart, ipo.subEnd)} />
