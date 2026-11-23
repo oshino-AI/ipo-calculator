@@ -1,6 +1,7 @@
 {
- "updatedAt": "2026-11-21T17:10+09:00",
+ "updatedAt": "2026-11-23T16:41+09:00",
  "warnings": [
+  "케이엠에프: 상세 읽기 실패 (ValueError)",
   "아델: 상세 읽기 실패 (ValueError)",
   "에스에프씨(유가): 상세 읽기 실패 (ValueError)",
   "씨앤엠: 상세 읽기 실패 (ValueError)",
