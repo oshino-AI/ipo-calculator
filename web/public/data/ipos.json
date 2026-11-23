@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-23T16:41+09:00",
+ "updatedAt": "2026-11-23T22:26+09:00",
  "warnings": [
   "케이엠에프: 상세 읽기 실패 (ValueError)",
   "아델: 상세 읽기 실패 (ValueError)",
@@ -436,7 +436,10 @@
      "name": "신영증권",
      "limit": 62000
     }
-   ]
+   ],
+   "price": 2000,
+   "instCompetition": "1275.80:1",
+   "lockupPct": 0.0
   },
   {
    "no": 2345,
