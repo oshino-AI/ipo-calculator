@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-24T07:18+09:00",
+ "updatedAt": "2026-11-24T18:56+09:00",
  "warnings": [
   "케이엠에프: 상세 읽기 실패 (ValueError)",
   "아델: 상세 읽기 실패 (ValueError)",
@@ -208,7 +208,9 @@
      "name": "KB증권",
      "limit": 40000
     }
-   ]
+   ],
+   "floatShares": 11658971,
+   "floatPct": 37.71
   },
   {
    "no": 2353,
@@ -236,7 +238,9 @@
      "name": "BNK투자증권",
      "limit": 9000
     }
-   ]
+   ],
+   "floatShares": 5474628,
+   "floatPct": 37.5
   },
   {
    "no": 2358,
@@ -290,7 +294,9 @@
      "name": "NH투자증권",
      "limit": 12000
     }
-   ]
+   ],
+   "floatShares": 6905080,
+   "floatPct": 46.53
   },
   {
    "no": 2351,
@@ -314,7 +320,9 @@
      "name": "한국투자증권",
      "limit": 11000
     }
-   ]
+   ],
+   "floatShares": 3600652,
+   "floatPct": 25.46
   },
   {
    "no": 2354,
@@ -362,7 +370,9 @@
      "name": "신영증권",
      "limit": 17000
     }
-   ]
+   ],
+   "floatShares": 4021887,
+   "floatPct": 37.95
   },
   {
    "no": 2350,
@@ -439,7 +449,8 @@
    ],
    "price": 2000,
    "instCompetition": "1275.80:1",
-   "lockupPct": 0.0
+   "lockupPct": 0.0,
+   "listDate": "2026-12-03"
   },
   {
    "no": 2345,
@@ -569,7 +580,16 @@
    "floatShares": 4878263,
    "floatPct": 34.01,
    "subCompetition": "172:1",
-   "proportional": "344:1"
+   "proportional": "344:1",
+   "open38": 5930,
+   "close38": 4230,
+   "open": 5930,
+   "high": 6700,
+   "low": 4200,
+   "close": 4200,
+   "priceCheck": false,
+   "priceSource": "naver",
+   "priceFinal": true
   },
   {
    "no": 2346,
