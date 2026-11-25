@@ -1,5 +1,5 @@
 {
- "updatedAt": "2026-11-25T05:55+09:00",
+ "updatedAt": "2026-11-25T17:37+09:00",
  "warnings": [
   "케이엠에프: 상세 읽기 실패 (ValueError)",
   "아델: 상세 읽기 실패 (ValueError)",
@@ -33,6 +33,38 @@
     {
      "name": "유안타증권",
      "limit": 1500
+    }
+   ]
+  },
+  {
+   "no": 2364,
+   "name": "범한메카텍(구.두산메카텍)",
+   "market": "코스닥",
+   "code": "370850",
+   "industry": "산업용 난방보일러, 금속탱크 및 유사 용기 제조업",
+   "subStart": "2026-12-17",
+   "subEnd": "2026-12-18",
+   "demandStart": "2026-12-08",
+   "demandEnd": "2026-12-14",
+   "allocDate": "2026-12-22",
+   "payDate": "2026-12-22",
+   "refundDate": "2026-12-22",
+   "bandLow": 22800,
+   "bandHigh": 28000,
+   "depositRate": 50,
+   "offerShares": 8700000,
+   "underwriters": [
+    {
+     "name": "NH투자증권",
+     "limit": null
+    },
+    {
+     "name": "유진투자증권",
+     "limit": null
+    },
+    {
+     "name": "BNK투자증권",
+     "limit": null
     }
    ]
   },
@@ -450,7 +482,9 @@
    "price": 2000,
    "instCompetition": "1275.80:1",
    "lockupPct": 0.0,
-   "listDate": "2026-12-03"
+   "listDate": "2026-12-03",
+   "subCompetition": "253:1",
+   "proportional": "506:1"
   },
   {
    "no": 2345,
@@ -550,7 +584,9 @@
    "listDate": "2026-11-30",
    "price": 19000,
    "instCompetition": "173.42:1",
-   "lockupPct": 0.57
+   "lockupPct": 0.57,
+   "subCompetition": "0.49:1",
+   "proportional": "1:1"
   },
   {
    "no": 2321,
