@@ -1,6 +1,7 @@
 {
- "updatedAt": "2026-11-27T04:55+09:00",
+ "updatedAt": "2026-11-27T17:36+09:00",
  "warnings": [
+  "에이엔에이치스트럭쳐: 상세 읽기 실패 (ValueError)",
   "케이엠에프: 상세 읽기 실패 (ValueError)",
   "아델: 상세 읽기 실패 (ValueError)",
   "에스에프씨(유가): 상세 읽기 실패 (ValueError)",
@@ -8,6 +9,32 @@
   "제이앤티지: 상세 읽기 실패 (ValueError)"
  ],
  "ipos": [
+  {
+   "no": 2348,
+   "name": "씨아이에스케미칼",
+   "market": "코스닥",
+   "code": "459650",
+   "industry": "알루미늄 제련, 정련 및 합금 제조업",
+   "subStart": "2027-01-21",
+   "subEnd": "2027-01-22",
+   "demandStart": "2027-01-11",
+   "demandEnd": "2027-01-15",
+   "allocDate": "2027-01-26",
+   "payDate": "2027-01-26",
+   "refundDate": "2027-01-26",
+   "bandLow": 5000,
+   "bandHigh": 6000,
+   "depositRate": 50,
+   "offerShares": 4000000,
+   "underwriters": [
+    {
+     "name": "KB증권",
+     "limit": 40000
+    }
+   ],
+   "floatShares": 11658971,
+   "floatPct": 37.71
+  },
   {
    "no": 2363,
    "name": "피지티",
@@ -217,32 +244,6 @@
      "limit": 11000
     }
    ]
-  },
-  {
-   "no": 2348,
-   "name": "씨아이에스케미칼",
-   "market": "코스닥",
-   "code": "459650",
-   "industry": "알루미늄 제련, 정련 및 합금 제조업",
-   "subStart": "2026-12-10",
-   "subEnd": "2026-12-11",
-   "demandStart": "2026-11-30",
-   "demandEnd": "2026-12-04",
-   "allocDate": "2026-12-15",
-   "payDate": "2026-12-15",
-   "refundDate": "2026-12-15",
-   "bandLow": 5400,
-   "bandHigh": 6800,
-   "depositRate": 50,
-   "offerShares": 4000000,
-   "underwriters": [
-    {
-     "name": "KB증권",
-     "limit": 40000
-    }
-   ],
-   "floatShares": 11658971,
-   "floatPct": 37.71
   },
   {
    "no": 2353,
